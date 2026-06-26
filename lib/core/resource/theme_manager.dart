@@ -8,55 +8,56 @@ import 'values_manager.dart';
 
 ThemeData getApplicationTheme() {
   return ThemeData(
-    brightness: Brightness.dark,
+    brightness: Brightness.light,
     useMaterial3: false,
 
-    // ===== Main colors =====
+    // ===== Main Colors =====
     primaryColor: ColorManager.primary,
     primaryColorLight: ColorManager.primaryLight,
     primaryColorDark: ColorManager.primaryDark,
     disabledColor: ColorManager.textSecondary,
-    splashColor: ColorManager.primaryDark,
-    scaffoldBackgroundColor: const Color(0xFF121212),
+    splashColor: ColorManager.primary.withValues(alpha: 0.15),
+    scaffoldBackgroundColor: ColorManager.background,
 
-    colorScheme: const ColorScheme.dark().copyWith(
+    colorScheme: ColorScheme.light(
       primary: ColorManager.primary,
       secondary: ColorManager.primaryDark,
+      surface: ColorManager.whiteColor,
       error: ColorManager.errorColor,
-      surface: Color(0xFF1E1E1E),
     ),
 
-    // ===== Card Theme =====
+    // ===== Card =====
     cardTheme: CardThemeData(
-      color: const Color(0xFF1E1E1E),
-      shadowColor: Colors.black54,
+      color: ColorManager.whiteColor,
+      shadowColor: ColorManager.shadowColor,
       elevation: AppSize.s4,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppSize.s8),
       ),
     ),
 
-    // ===== AppBar Theme =====
+    // ===== AppBar =====
     appBarTheme: AppBarTheme(
       centerTitle: true,
-      backgroundColor: const Color(0xFF121212),
-      elevation: AppSize.s4,
-      iconTheme: const IconThemeData(color: Colors.white),
+      backgroundColor: ColorManager.whiteColor,
+      surfaceTintColor: Colors.transparent,
+      elevation: 0,
+      iconTheme: IconThemeData(color: ColorManager.textPrimary),
       titleTextStyle: getSemiBold600Style12(
-        color: Colors.white,
+        color: ColorManager.textPrimary,
         fontSize: FontSize.s16,
       ),
     ),
 
-    // ===== Button Theme =====
+    // ===== Button =====
     buttonTheme: ButtonThemeData(
       shape: const StadiumBorder(),
-      disabledColor: ColorManager.textSecondary,
+      disabledColor: ColorManager.grayscale60,
       buttonColor: ColorManager.primary,
-      splashColor: ColorManager.primaryDark,
+      splashColor: ColorManager.primary.withValues(alpha: 0.15),
     ),
 
-    // ===== Elevated Button Theme =====
+    // ===== Elevated Button =====
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: ColorManager.primary,
@@ -75,22 +76,22 @@ ThemeData getApplicationTheme() {
       ),
     ),
 
-    // ===== Text Theme =====
+    // ===== Text =====
     textTheme: TextTheme(
       headlineLarge: getSemiBold600Style12(
-        color: Colors.white,
+        color: ColorManager.textPrimary,
         fontSize: FontSize.s20,
       ),
       titleMedium: getMedium500Style12(
-        color: Colors.white,
+        color: ColorManager.textPrimary,
         fontSize: FontSize.s16,
       ),
       bodyMedium: getRegular400Style12(
-        color: Colors.white,
+        color: ColorManager.textPrimary,
         fontSize: FontSize.s14,
       ),
       bodySmall: getRegular400Style12(
-        color: Colors.white70,
+        color: ColorManager.textSecondary,
         fontSize: FontSize.s12,
       ),
       labelLarge: getSemiBold600Style12(
@@ -99,61 +100,62 @@ ThemeData getApplicationTheme() {
       ),
     ),
 
-    // ===== Cursor & Selection Colors =====
+    // ===== Text Selection =====
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: ColorManager.primary,
       selectionColor: ColorManager.primary.withValues(alpha: 0.2),
       selectionHandleColor: ColorManager.primary,
     ),
 
-    // ===== Input Field Theme =====
+    // ===== Input =====
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: ColorManager.whiteColor.withValues(alpha: 0.1),
+      fillColor: ColorManager.containerColor1,
 
       hintStyle: getRegular400Style14(color: ColorManager.grayscale60),
 
       labelStyle: getMedium500Style12(color: ColorManager.grayscale70),
 
-      helperStyle: getRegular400Style12(color: ColorManager.blackColor),
+      helperStyle: getRegular400Style12(color: ColorManager.textSecondary),
 
       errorStyle: getRegular400Style12(color: ColorManager.errorColor),
 
       contentPadding: const EdgeInsets.all(AppPadding.p16),
 
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: ColorManager.transparentColor,
-          width: AppSize.s1_5,
-        ),
-        borderRadius: BorderRadius.all(Radius.circular(12.r)),
+        borderRadius: BorderRadius.circular(12.r),
+        borderSide: BorderSide(color: ColorManager.borderColor, width: 1),
       ),
 
       focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.r),
         borderSide: BorderSide(
-          color: ColorManager.transparentColor,
+          color: ColorManager.primary,
           width: AppSize.s1_5,
         ),
-        borderRadius: BorderRadius.all(Radius.circular(12.r)),
       ),
 
       errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.r),
         borderSide: BorderSide(
           color: ColorManager.errorColor,
           width: AppSize.s1_5,
         ),
-        borderRadius: BorderRadius.all(Radius.circular(12.r)),
       ),
 
       focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.r),
         borderSide: BorderSide(
           color: ColorManager.errorColor,
           width: AppSize.s1_5,
         ),
-        borderRadius: BorderRadius.all(Radius.circular(12.r)),
       ),
     ),
-    // ===== Icon Theme =====
+
+    // ===== Divider =====
+    dividerColor: ColorManager.dividerColor,
+
+    // ===== Icon =====
     iconTheme: IconThemeData(color: ColorManager.primary, size: AppSize.s24),
   );
 }
