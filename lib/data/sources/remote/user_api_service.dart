@@ -13,11 +13,10 @@ class UserApiService {
         endpoints: ApiEndpoints.users(page, perPage),
       );
 
-      if (res == null) {
-        throw Exception('No response received');
-      }
-
-      if (res.statusCode == 200 || res.statusCode == 201) {
+      if (res is Map<String, dynamic>) {
+        if (res['status'] == false) {
+          throw Exception(res['message'] ?? 'An error occurred');
+        }
         return UserModel.fromJson(res);
       }
 

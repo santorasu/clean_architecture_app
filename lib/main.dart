@@ -6,8 +6,7 @@ import 'core/resource/theme_manager.dart';
 import 'core/route/route_import_part.dart';
 import 'core/route/route_name.dart';
 
-
-void main() async {
+  void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(ProviderScope(child: const MyApp()));
@@ -22,7 +21,7 @@ class MyApp extends ConsumerWidget {
       designSize: const Size(375, 812),
       builder: (context, child) => MaterialApp(
         navigatorKey: AppRouter.navigatorKey,
-        title: 'PICKS EMPIRE',
+        title: 'User List',
         debugShowCheckedModeBanner: false,
         theme: getApplicationTheme(),
         darkTheme: getApplicationTheme(),
