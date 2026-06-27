@@ -1,6 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:clean_architecture_app/core/resource/style_manager.dart';
 import 'package:clean_architecture_app/data/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../core/constansts/color_manger.dart';
+import '../../../core/constansts/icon_manager.dart';
 
 class UserDetailScreen extends StatelessWidget {
   final Data user;
@@ -10,39 +15,49 @@ class UserDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fullName = '${user.firstName ?? ''} ${user.lastName ?? ''}'.trim();
-    
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(fullName),
-        elevation: 0,
-      ),
+      appBar: AppBar(title: Text(fullName), elevation: 0),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(width: double.infinity, height: 40.h),
-            Hero(
-              tag: 'avatar_${user.id}',
-              child: CircleAvatar(
-                radius: 60.r,
-                backgroundImage: NetworkImage(user.avatar ?? ''),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(100.r),
+              child: CachedNetworkImage(
+                imageUrl: user.avatar ?? '',
+                width: 120.w,
+                height: 120.h,
+                fit: BoxFit.cover,
+                placeholder: (context, url) => CircularProgressIndicator(
+                  color: ColorManager.primary,
+                  strokeWidth: 2.w,
+                ),
+                errorWidget: (context, url, error) => Image.asset(
+                  IconManager.profileIcon,
+                  width: 120.w,
+                  height: 120.h,
+                ),
               ),
             ),
+
+            // Hero(
+            //   tag: 'avatar_${user.id}',
+            //   child: CircleAvatar(
+            //     radius: 60.r,
+            //     backgroundImage: NetworkImage(user.avatar ?? ''),
+            //   ),
+            // ),
             24.verticalSpace,
             Text(
               fullName,
-              style: TextStyle(
-                fontSize: 24.sp,
-                fontWeight: FontWeight.bold,
-              ),
+              style: getSemiBold600Style24(color: ColorManager.textPrimary),
             ),
             8.verticalSpace,
             Text(
               user.email ?? '',
-              style: TextStyle(
-                fontSize: 16.sp,
-                color: Colors.grey[600],
-              ),
+              style: getMedium500Style16(color: ColorManager.blackColor),
             ),
             32.verticalSpace,
             Padding(
@@ -56,11 +71,23 @@ class UserDetailScreen extends StatelessWidget {
                   padding: EdgeInsets.all(20.w),
                   child: Column(
                     children: [
-                      _buildInfoRow(Icons.person_outline, 'First Name', user.firstName ?? ''),
+                      _buildInfoRow(
+                        Icons.person_outline,
+                        'First Name',
+                        user.firstName ?? '',
+                      ),
                       const Divider(height: 24),
-                      _buildInfoRow(Icons.person, 'Last Name', user.lastName ?? ''),
+                      _buildInfoRow(
+                        Icons.person,
+                        'Last Name',
+                        user.lastName ?? '',
+                      ),
                       const Divider(height: 24),
-                      _buildInfoRow(Icons.email_outlined, 'Email', user.email ?? ''),
+                      _buildInfoRow(
+                        Icons.email_outlined,
+                        'Email',
+                        user.email ?? '',
+                      ),
                     ],
                   ),
                 ),
@@ -83,18 +110,12 @@ class UserDetailScreen extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  color: Colors.grey[500],
-                ),
+                style: getRegular400Style14(color: ColorManager.blackColor),
               ),
               4.verticalSpace,
               Text(
                 value,
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: getMedium500Style16(color: ColorManager.blackColor),
               ),
             ],
           ),
