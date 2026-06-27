@@ -19,6 +19,7 @@ class _UserListScreenState extends ConsumerState<UserListScreen> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController searchController = TextEditingController();
   final FocusNode searchFocusNode = FocusNode();
+  DateTime? currentBackPressTime;
 
   @override
   void initState() {
@@ -68,8 +69,24 @@ class _UserListScreenState extends ConsumerState<UserListScreen> {
             return fullName.contains(query);
           }).toList();
 
-    return SafeArea(
-      child: Scaffold(
+    // ignore: deprecated_member_use
+    return WillPopScope(
+      onWillPop: () async {
+        DateTime now = DateTime.now();
+        if (currentBackPressTime == null ||
+            now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
+          currentBackPressTime = now;
+          Utils.showToast(
+            message: 'Press back again to exit',
+            backgroundColor: ColorManager.blackColor,
+            textColor: ColorManager.whiteColor,
+          );
+          return Future.value(false);
+        }
+        return Future.value(true);
+      },
+      child: SafeArea(
+        child: Scaffold(
         appBar: AppBar(
           title: Text(
             'Users',
@@ -265,6 +282,7 @@ class _UserListScreenState extends ConsumerState<UserListScreen> {
             ),
           ),
         ),
+      ),
       ),
     );
   }
